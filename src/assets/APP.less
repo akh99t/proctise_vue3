@@ -1,0 +1,62 @@
+:root {
+  /* 高度, 内外边距 */
+  --header_height: 0px;
+  --header_height: 40px;
+  --content_box_height: 100%;
+  --main_padding: 10px;
+  /* 颜色 */
+  --default_font_color: #000000;
+  --subject_color_1: #e2f3f5;
+}
+.app_box {
+  height: 100%;
+  // overflow: hidden;
+  .el-container {
+    height: 100%;
+    overflow: hidden;
+    .el-header, .el-footer {
+      background-color: #0e153a;
+      text-align: center;
+      color: var(--subject_color_1);
+      line-height: var(--header_height) !important;
+      height: var(--header_height) !important;
+    }
+    .el-aside {
+      width: 180px;
+      background-color: #22d1ee;
+      text-align: center;
+      color: var(--default_font_color);
+      height: var(--content_box_height) !important;
+    }
+    .el-main {
+      background-color: var(--subject_color_1);
+      height: var(--content_box_height) !important;
+      color: var(--default_font_color);
+      padding: var(--main_padding);
+      overflow: hidden;
+      overflow-y: auto;
+    }
+    .el-container, .is-vertical{
+      height: var(--content_box_height) !important;
+    }
+  }
+
+  // element 对话框
+  .el-dialog {
+    padding: 10px 0;
+    .el-dialog__footer {
+      padding-top: 10px;
+    }
+  }
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.5 );
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}

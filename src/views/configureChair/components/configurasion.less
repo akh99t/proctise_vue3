@@ -1,0 +1,36 @@
+// 头部变量
+@headerHeight: 45px;
+@headerColor: #ccc;
+// 底部变量
+@footerHeight: 45px;
+@footerColor: #ccc;
+// 共同变量
+@allPadding: 10px 0;
+
+
+div {
+  box-sizing: border-box;
+}
+.configurasion_box {
+  height: 100%;
+  overflow: hidden;
+  header {
+    height: @headerHeight;
+    background-color: @headerColor;
+    text-align: center;
+    line-height: @headerHeight;
+    font-size: 18px;
+  }
+  .main_box {
+    height: calc(100% - @headerHeight - @footerHeight );
+    padding: @allPadding;
+  }
+  footer {
+    height: @footerHeight;
+    background-color: @footerColor;
+    text-align: right;
+    line-height: calc(@footerHeight - 5px);
+    padding: 0 10px;
+  }
+  
+}
