@@ -1,11 +1,12 @@
 // 头部变量
 @headerHeight: 45px;
-@headerColor: #ccc;
+@headerColor: #337ecc;
+@headTextColor: #fff;
 // 底部变量
 @footerHeight: 45px;
-@footerColor: #ccc;
+@footerColor: @headerColor;
 // 共同变量
-@allPadding: 10px 0;
+@allPadding: 10px 10px 10px 0;
 
 
 div {
@@ -14,16 +15,19 @@ div {
 .configurasion_box {
   height: 100%;
   overflow: hidden;
+  background-color: #fff;
   header {
     height: @headerHeight;
     background-color: @headerColor;
     text-align: center;
     line-height: @headerHeight;
     font-size: 18px;
+    color: @headTextColor;
   }
   .main_box {
     height: calc(100% - @headerHeight - @footerHeight );
     padding: @allPadding;
+    background-color: #a0cfff;
   }
   footer {
     height: @footerHeight;

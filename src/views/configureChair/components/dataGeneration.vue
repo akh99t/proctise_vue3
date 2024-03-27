@@ -110,6 +110,7 @@ const props = defineProps([
   "modelValue",
   "dialogShowData",
   "exportDataToplimit",
+  "exportData",
 ]);
 const emits = defineEmits(["update:modelValue"]);
 
@@ -120,7 +121,7 @@ watch(props.modelValue, (newVal) => {
 onMounted(() => {
   // 清空数据, 让上级导出按钮禁用
   props.modelValue.length = 0;
-})
+});
 
 // 是否展示数据预览
 let showTablePreview = ref(false);
@@ -290,7 +291,7 @@ let downloadExcel = () => {
   let columnListMap = columnList.map((item: { label: string }) => {
     return item.label;
   });
-  let modelValueToRaw = props.modelValue;
+  let modelValueToRaw = toRaw(props.exportData.list);
   modelValueToRaw.forEach((item: []) => {
     let obj: {
       [key: string]: any;
@@ -328,7 +329,11 @@ let exportDataObj: {
 watch(
   showTablePreview,
   (newVal) => {
-    console.log("---  监听导入数据 showTablePreview ---", newVal, props.modelValue);
+    console.log(
+      "---  监听导入数据 showTablePreview ---",
+      newVal,
+      props.modelValue
+    );
   },
   { deep: true }
 );

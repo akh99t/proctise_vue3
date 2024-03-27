@@ -6,7 +6,7 @@
   --main_padding: 10px;
   /* 颜色 */
   --default_font_color: #000000;
-  --subject_color_1: #e2f3f5;
+  --subject_color_1: #fff;
 }
 .app_box {
   height: 100%;
@@ -15,15 +15,23 @@
     height: 100%;
     overflow: hidden;
     .el-header, .el-footer {
-      background-color: #0e153a;
+      background-color: #303133;
       text-align: center;
       color: var(--subject_color_1);
       line-height: var(--header_height) !important;
       height: var(--header_height) !important;
     }
+    .el-header {
+      span {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        font-size: 10px;
+      }
+    }
     .el-aside {
       width: 180px;
-      background-color: #22d1ee;
+      background-color: #606266;
       text-align: center;
       color: var(--default_font_color);
       height: var(--content_box_height) !important;
@@ -52,7 +60,7 @@
 
 // 滚动条样式
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 0px;
   background-color: rgba(255, 255, 255, 0.5 );
   border-radius: 5px;
 }

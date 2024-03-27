@@ -16,6 +16,7 @@ const chartDisplayFun = ref();
 
 // 更新图表与表格
 const allUpdateFun = (data: object = {}) => {
+  console.log('------------------------ 123');
   let refArr = toRaw(chartDisplayFun.value) || [];
   refArr.forEach((item: any) => {
     let { initData } = item;
@@ -24,12 +25,13 @@ const allUpdateFun = (data: object = {}) => {
 };
 
 mitt.on("chartOptionData", (data: any) => {
-  // console.log('--- chart 图表参数 ---', data);
+  console.log('--- chart 图表参数 ---', data);
   allUpdateFun(data)
 });
 
 onUnmounted(()=> {
-  mitt.all.clear()
+  // mitt.all.clear()
+  mitt.off('myEvent');
 })
 defineExpose({ allUpdateFun });
 </script>
@@ -37,15 +39,15 @@ defineExpose({ allUpdateFun });
 <style scoped lang="less">
 .show_content {
   height: 100%;
-  padding: 5px;
-  background-color: #fff;
+  // padding: 5px;
+  // background-color: #fff;
   box-sizing: border-box;
   .show_content_item {
-    height: calc(50% - 3px);
-    background-color: #ccc;
+    height: calc(50% - 5px);
+    background-color: #a0cfff;
   }
   .show_content_item:first-child {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 }
 </style>

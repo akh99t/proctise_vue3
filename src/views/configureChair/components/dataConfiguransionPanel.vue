@@ -50,6 +50,7 @@
         :exportDataToplimit="exportDataToplimit"
         :dialogShowData="dialogShowData"
         v-model="cloneDeepExportData.list"
+        :exportData="exportData"
       ></dataGeneration>
 
       <template #footer>

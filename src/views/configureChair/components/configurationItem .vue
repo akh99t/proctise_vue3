@@ -25,9 +25,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    color: #fff;
   }
   .content {
-    background-color: #ccc;
+    background-color: #fff;
     width: calc(100% - @titleWidth);
     border-radius: 10px;
     padding: 10px 0;

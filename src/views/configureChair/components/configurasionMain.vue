@@ -58,7 +58,7 @@ import { ref, reactive, watch, provide, toRaw } from "vue";
 import { decideIsArrayFun } from "@/plugins/decideFun";
 import { cloneDeep } from "lodash";
 
-const chartType = ref("line");
+const chartType = ref("area");
 provide("chartType", chartType);
 
 // 标题配置项

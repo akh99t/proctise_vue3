@@ -23,8 +23,11 @@ import configurasion from "./configurasion.vue";
   height: 100%;
   display: flex;
   justify-content: space-between;
+  background-color: #d9ecff;
+  padding: 10px;
+  box-sizing: border-box;
   .flex_item {
-    width: calc(100% - @configurasionBoxWidth - 5px);
+    width: calc(100% - @configurasionBoxWidth - 10px);
   }
   .flex_item_configurasion {
     width: @configurasionBoxWidth;
