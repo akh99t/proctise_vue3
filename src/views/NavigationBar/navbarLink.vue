@@ -12,14 +12,17 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import { ref, watch } from "vue";
+import { ref, watch, toRaw } from "vue";
 import { useRoute } from "vue-router";
+import { userRouterStore } from "@/store/router";
+const store = userRouterStore();
 
 let currentRoute = ref("/");
 
 let filterRoutesList = () => {
   return router.getRoutes().filter((item) => {
-    return !["/loggedIn", "/"].includes(item.path);
+    let list = toRaw(store.FILTER_ROUTES);
+    return !list.includes(item.path);
   });
 };
 let routesList = filterRoutesList();

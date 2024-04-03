@@ -19,4 +19,14 @@ import router from './router/index';
 // 全局挂载lodash
 // app.provide('_', lodash)
 
-app.use(ElementUI).use(router).mount('#app')
+// Vue.js 状态管理库-pinia
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+
+let appUseFun = (list:any[] = []) => {
+  list.forEach(item => {
+    app.use(item)
+  });
+  app.mount('#app')
+}
+appUseFun([ElementUI, router, pinia])

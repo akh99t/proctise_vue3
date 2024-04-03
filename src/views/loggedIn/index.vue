@@ -1,5 +1,6 @@
 <template>
   <div class="login_interface">
+    <!-- 登录窗口 -->
     <div class="center_box">
       <div class="item">
         <div class="label_box">用户:</div>
@@ -7,6 +8,8 @@
           <el-input
             v-model="user"
             placeholder="这里填账号!"
+            maxlength="10"
+            show-word-limit
             @keypress="handleKeyPress"
             @keyup.enter="() => handleEnterEnter('user')"
           />
@@ -21,6 +24,8 @@
             type="password"
             ref="inputPasswordRef"
             placeholder="这里填密码!"
+            maxlength="10"
+            show-word-limit
             @keypress="handleKeyPress"
             @keyup.enter="() => handleEnterEnter('password')"
             show-password
@@ -29,10 +34,41 @@
       </div>
 
       <div class="switch_box">
-        <el-button style="width: 120px" disabled>访客登录</el-button>
-        <el-button style="width: 120px" type="primary" @click="loginFun"
+        <el-button
+          style="width: 120px"
+          @click="guestLogin"
+          :disabled="btnDisabled"
+          >访客登录</el-button
+        >
+        <el-button
+          style="width: 120px"
+          type="primary"
+          @click="loginFun"
+          :disabled="btnDisabled"
           >登录</el-button
         >
+      </div>
+    </div>
+    <!-- 底部装饰物动画 -->
+    <div class="ornaments_bottom">
+      <div class="mario_box">
+        <div class="mario_translation_box" ref="marioTranslationBoxRef">
+          <img :src="src" v-for="src in marioSrcList" :key="`img_${src}`" />
+        </div>
+        <div class="pipeline_box">
+          <img src="@/assets/images/马里奥_管道new.png" />
+        </div>
+      </div>
+      <div class="floor_box">
+        <div class="translation_box">
+          <div
+            class="floor_item"
+            v-for="item in iconFloorNum"
+            :key="`floor_item_${item}`"
+          >
+            <img src="@/assets/images/马里奥_地砖.png" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -41,17 +77,26 @@
 <script setup lang="ts">
 import { MD5 } from "crypto-js";
 import { axiosFun, saveUserDataToLocalStorage } from "@/plugins/axiosFun";
-import { ref } from "vue";
+import { ref, nextTick, inject, watch } from "vue";
 import { ElMessage } from "element-plus";
 import router from "@/router";
+import marioGif from "@/assets/images/马里奥_走路.gif";
 
 let user = ref("");
 let password = ref("");
+let btnDisabled = ref(false);
+// 外部dom宽度
+const appBoxWidth = inject("appBoxWidth");
+// icon数量
+let iconFloorNum = ref(50);
+let marioSrcList = [marioGif, marioGif, marioGif];
 
 let inputPasswordRef = ref();
+let marioTranslationBoxRef = ref();
 
 // 登录
 let loginFun = async () => {
+  btnDisabled.value = true;
   if (user.value && password.value) {
     let parameters = {
       userName: user.value,
@@ -88,6 +133,18 @@ let loginFun = async () => {
   }
 };
 
+// 访客登录
+let guestLogin = () => {
+  btnDisabled.value = true;
+  user.value = "访客登录";
+  password.value = "999999";
+  nextTick(() => {
+    setTimeout(() => {
+      loginFun();
+    }, 1000);
+  });
+};
+
 // 按键事件
 let handleKeyPress = (event: any) => {
   // 禁止空格
@@ -106,6 +163,22 @@ let handleEnterEnter = (type: string = "") => {
   } else {
   }
 };
+
+nextTick(() => {
+  marioTranslationBoxRef.value.classList.add("mario_translation_box_js");
+  setTimeout(() => {
+    marioTranslationBoxRef.value.classList.remove("mario_translation_box_js");
+  }, 500);
+});
+
+watch(
+  () => appBoxWidth,
+  (newVal: any) => {
+    let iconNum = Math.ceil(newVal.value / 70) + 1;
+    iconFloorNum.value = iconNum;
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped src="./index.less" lang="less"></style>

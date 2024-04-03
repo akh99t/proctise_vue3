@@ -63,4 +63,10 @@ export const uploadConversationData = async (
     "post",
     { userName, dataJSON: JSON.stringify(qaRecord), userID }
   );
+  if (code === 200) {
+    return data;
+  } else {
+    ElMessage.warning(message);
+    return false;
+  }
 };

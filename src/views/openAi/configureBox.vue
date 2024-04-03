@@ -85,7 +85,7 @@
 import shareBoxFlex from "@/components/shareBox/shareBoxFlex.vue";
 import configurationGuide from "./configurationGuide.vue";
 import fillData from "./fillData.vue";
-import { reactive, onMounted, toRaw, onUnmounted, ref } from "vue";
+import { reactive, onMounted, toRaw, onUnmounted, ref, nextTick } from 'vue';
 import { axiosFun } from "@/plugins/axiosFun";
 import { configuration } from "./configure";
 import { ElMessage } from "element-plus";
@@ -120,7 +120,9 @@ let updateConfigurationFun = (
   if (type === "export") {
     return obj;
   } else {
-    mitt.emit("updateConfiguration", obj);
+    nextTick(() => {
+      mitt.emit("updateConfiguration", obj);
+    })
     return null;
   }
 };
@@ -151,29 +153,33 @@ let exportDataFun = async () => {
       { userName }
     );
     if (code === 200 && Array.isArray(data)) {
-      let conversationList: { [key: string]: any }[] = [];
-      data.forEach(({ userID, date, dataJSON }) => {
-        let { Q, A } = JSON.parse(dataJSON) || {};
-        let AList = [];
-        if (Array.isArray(A)) {
-          AList.push(
-            ...A.map(({ message }) => {
-              return message?.content || "";
-            })
-          );
-        }
-        let obj = {
-          userName,
-          userID,
-          date: moment(date).format("YYYY-MM-DD HH:mm:ss"),
-          "Q&A": {
-            Q,
-            A: AList,
-          },
-        };
-        conversationList.push(obj);
-      });
-      exportFillFun(conversationList, `${userName}聊天记录`);
+      if (data.length) {
+        let conversationList: { [key: string]: any }[] = [];
+        data.forEach(({ userID, date, dataJSON }) => {
+          let { Q, A } = JSON.parse(dataJSON) || {};
+          let AList = [];
+          if (Array.isArray(A)) {
+            AList.push(
+              ...A.map(({ message }) => {
+                return message?.content || "";
+              })
+            );
+          }
+          let obj = {
+            userName,
+            userID,
+            date: moment.utc(date).format("YYYY-MM-DD HH:mm:ss"),
+            "Q&A": {
+              Q,
+              A: AList,
+            },
+          };
+          conversationList.push(obj);
+        });
+        exportFillFun(conversationList, `${userName}_[${moment(new Date()).format("YY/MM/DD")}]_记录`);
+      } else {
+        ElMessage.warning('当前对话记录: 0');
+      }
     } else {
       ElMessage.warning(message);
     }

@@ -25,11 +25,17 @@ export const saveUserDataToLocalStorage = function (data: {
 export const axiosFun = async (
   url: string,
   method: string = "get",
-  parameters?: {
+  parameters: {
     [key: string]: any;
-  }
+  } = {}
 ) => {
   try {
+    if ( !parameters?._id  ) {
+      let userJSON = JSON.parse(localStorage.getItem('user') || '{}')
+      parameters._id = userJSON._id || ''
+      parameters.userName = parameters.userName || userJSON?.session?.user
+    }
+
     let configuration = {
       // withCredentials: true,
       /**

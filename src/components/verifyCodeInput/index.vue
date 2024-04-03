@@ -53,10 +53,10 @@ let qualifyValidation = async () => {
     ElMessage.warning("请输入邀请码");
   } else {
     let userVoucher = await checkUserCredentials();
-    if (userVoucher) {
+    if (userVoucher && userVoucher._id) {
       let { code } = await axiosFun(props.url, "post", {
         invitationCode: invitationCode.value,
-        userID: userVoucher,
+        userID: userVoucher._id,
       });
       if (code === 200) {
         try {

@@ -70,7 +70,7 @@ let parameter: { [key: string]: string } = reactive({
 let dialog: { [key: string]: any }[] = reactive([]);
 let disabled = ref(true);
 // AI对话次数用尽
-let isAILimitExhausted = ref(false)
+let isAILimitExhausted = ref(false);
 let elInputRef = ref();
 
 let init = async () => {
@@ -80,7 +80,9 @@ let init = async () => {
   parameter.userName = session?.user || "";
 
   // 获取今日当前用户的对话次数
-  let fetchQALimitAndAvailabilityData = await fetchQALimitAndAvailabilityFun(session?.user || "")
+  let fetchQALimitAndAvailabilityData = await fetchQALimitAndAvailabilityFun(
+    session?.user || ""
+  );
   if (fetchQALimitAndAvailabilityData) {
     return thirdPartyTransferAIFun("你好, 请你介绍一下自己");
   }
@@ -94,7 +96,7 @@ let thirdPartyTransferAIFun = (
   return new Promise((resolve, reject) => {
     disabled.value = true;
     thirdPartyTransferAI(content, parameter)
-      .then((value: any) => {
+      .then(async (value: any) => {
         if (value instanceof Array && value.length) {
           let obj = {
             type: "A",
@@ -120,7 +122,7 @@ let thirdPartyTransferAIFun = (
             parameter?.userName &&
             parameter?.user
           ) {
-            uploadConversationData(
+            await uploadConversationData(
               parameter.userName,
               {
                 Q: cloneContentText.value,
@@ -132,7 +134,7 @@ let thirdPartyTransferAIFun = (
 
           // 获取今日当前用户的对话次数
           if (parameter?.userName) {
-            fetchQALimitAndAvailabilityFun(parameter.userName)
+            fetchQALimitAndAvailabilityFun(parameter.userName);
           }
 
           nextTick(() => {
@@ -167,19 +169,22 @@ let sendDataFun = () => {
 };
 
 // 获取今日当前用户的对话次数
-let fetchQALimitAndAvailabilityFun = async (userName:string = "") => {
+let fetchQALimitAndAvailabilityFun = async (userName: string = "") => {
   let fetchQALimitAndAvailabilityData = await fetchQALimitAndAvailability(
     userName
   );
-  
+
   if (typeof fetchQALimitAndAvailabilityData === "object") {
     let { dialogueLimit, todayCount } = fetchQALimitAndAvailabilityData;
-    if ( dialogueLimit === todayCount ) {
-      isAILimitExhausted.value = true
+    if (dialogueLimit === todayCount) {
+      isAILimitExhausted.value = true;
     } else {
-      isAILimitExhausted.value = false
+      isAILimitExhausted.value = false;
     }
-    mitt.emit("fetchQALimitAndAvailability", fetchQALimitAndAvailabilityData);
+
+    nextTick(() => {
+      mitt.emit("fetchQALimitAndAvailability", fetchQALimitAndAvailabilityData);
+    });
     return true;
   } else {
     return false;
@@ -195,13 +200,19 @@ function scrollToBottom(id: string) {
 }
 
 // 配置的参数
-mitt.on("updateConfiguration", (data) => {
+let updateConfigurationFun = (data: any) => {
   Object.assign(parameter, data);
-});
+};
+let mittGet = mitt.all.get("updateConfiguration");
+if (mittGet && mittGet.length) {
+  // 已经添加了事件监听器
+} else {
+  mitt.on("updateConfiguration", updateConfigurationFun);
+}
 
 onUnmounted(() => {
   // mitt.all.clear();
-  mitt.off('updateConfiguration');
+  mitt.off("updateConfiguration", updateConfigurationFun);
 });
 
 defineExpose({ init, parameter });

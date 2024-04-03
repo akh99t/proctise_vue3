@@ -10,6 +10,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["node"],
 
     "moduleResolution": "node"
   }

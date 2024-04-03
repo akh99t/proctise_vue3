@@ -71,13 +71,19 @@ let isLimitExceeded = () => {
 };
 
 // 配置的参数
-mitt.on("fetchQALimitAndAvailability", (data) => {
+let fetchQALimitAndAvailabilityFun = (data: any) => {
   Object.assign(fetchQALimitAndAvailability.value, data);
-});
+}
+let mittGet = mitt.all.get('fetchQALimitAndAvailability')
+if (mittGet && mittGet.length) {
+  // 已经添加了事件监听器
+} else {
+  mitt.on("fetchQALimitAndAvailability", fetchQALimitAndAvailabilityFun);
+}
 
 onUnmounted(() => {
   // mitt.all.clear();
-  mitt.off('fetchQALimitAndAvailability');
+  mitt.off('fetchQALimitAndAvailability', fetchQALimitAndAvailabilityFun);
 });
 </script>
 

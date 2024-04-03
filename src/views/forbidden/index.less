@@ -1,0 +1,109 @@
+
+@borderVerticalHeight: 240px;
+@borderVerticalSpaceBetween: 3;
+@borderBoxHeight: 15px;
+@borderBoxColor: #26221f;
+@warningColorA: #eb3d00;
+@warningColorB: #26221f;
+.forbidden_box {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: @warningColorB;
+  header,
+  footer {
+    width: 100%;
+    height: @borderVerticalHeight;
+    position: relative;
+    overflow: hidden;
+    .border_box {
+      width: 100%;
+      height: @borderBoxHeight;
+      background-color: @borderBoxColor;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .border_box_bottom {
+      top: calc(100% - @borderBoxHeight);
+    }
+    .container {
+      position: absolute;
+      top: @borderBoxHeight;
+      left: -50px;
+      width: 120%;
+      height: calc(100% - (@borderBoxHeight * 2));
+      display: flex;
+      // overflow: hidden;
+      animation: slideRight 0.5s linear infinite;
+      .container_item {
+        width: calc((@borderVerticalHeight - (@borderBoxHeight * 2)) / @borderVerticalSpaceBetween);
+        height: 100%;
+        flex-shrink: 0;
+        position: relative;
+        div {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: calc(100% * @borderVerticalSpaceBetween);
+          height: 100%;
+          background-color: @warningColorA;
+          transform: rotate(45deg);
+        }
+      }
+      .container_item:nth-child(even) {
+        div {
+          background-color: @warningColorB;
+        }
+      }
+    }
+  }
+  header {
+    .container {
+      // top: 0;
+      animation: slideLeft 0.5s linear infinite;
+      transform: rotateY(180deg);
+    }
+  }
+  main {
+    width: 100%;
+    height: calc(100% - (@borderVerticalHeight * 2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .warn_box {
+      font-size: 70px;
+      text-align: center;
+      color: @warningColorA;
+      span {
+        color: #E6A23C;
+        font-size: 20px;
+        line-height: 30px;
+      }
+      i {
+        font-size: 160px;
+      }
+    }
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    left: calc(
+      ((@borderVerticalHeight - (@borderBoxHeight * 2)) / (@borderVerticalSpaceBetween * -1)) * 3
+    );
+  }
+  100% {
+    left: calc((@borderVerticalHeight - (@borderBoxHeight * 2)) / (@borderVerticalSpaceBetween * -1));
+  }
+}
+@keyframes slideRight {
+  0% {
+    left: calc((@borderVerticalHeight - (@borderBoxHeight * 2)) / (@borderVerticalSpaceBetween * -1));
+  }
+  100% {
+    left: calc(
+      ((@borderVerticalHeight - (@borderBoxHeight * 2)) / (@borderVerticalSpaceBetween * -1)) * 3
+    );
+  }
+}

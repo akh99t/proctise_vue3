@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import mitt from "@/plugins/mitt";
 import configurasionMain from "./components/configurasionMain.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from 'vue';
 const configurasionMainFun = ref();
 
 let previewFun = () => {
@@ -27,9 +27,10 @@ let previewFun = () => {
 let revaalChart = () => {
   let { getChartData } = configurasionMainFun.value;
   let option = getChartData()
-  console.log('--- 获取数据加载图表 ---', option);
   
-  mitt.emit("chartOptionData", option);
+  nextTick(() => {
+    mitt.emit("chartOptionData", option);
+  })
 };
 
 onMounted(() => {

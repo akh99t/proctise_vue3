@@ -16,7 +16,6 @@ const chartDisplayFun = ref();
 
 // 更新图表与表格
 const allUpdateFun = (data: object = {}) => {
-  console.log('------------------------ 123');
   let refArr = toRaw(chartDisplayFun.value) || [];
   refArr.forEach((item: any) => {
     let { initData } = item;
@@ -24,14 +23,19 @@ const allUpdateFun = (data: object = {}) => {
   });
 };
 
-mitt.on("chartOptionData", (data: any) => {
-  console.log('--- chart 图表参数 ---', data);
+let chartOptionDataFun = (data: any) => {
   allUpdateFun(data)
-});
+}
+let mittGet = mitt.all.get('chartOptionData')
+if (mittGet && mittGet.length) {
+  // 已经添加了事件监听器
+} else {
+  mitt.on("chartOptionData", chartOptionDataFun);
+}
 
 onUnmounted(()=> {
   // mitt.all.clear()
-  mitt.off('myEvent');
+  mitt.off('chartOptionData', chartOptionDataFun);
 })
 defineExpose({ allUpdateFun });
 </script>
