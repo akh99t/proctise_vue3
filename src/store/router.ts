@@ -5,6 +5,6 @@ export const userRouterStore = defineStore("router", {
     // 禁止展示的路由
     FILTER_ROUTES: ["/", "/loggedIn", "/forbidden"],
     // 最高权限路由
-    HIGHEST_AUTH_ROUTE: ["/InterfaceLog"],
+    HIGHEST_AUTH_ROUTE: ["/InterfaceLog", "/usersManagement"],
   }),
 });

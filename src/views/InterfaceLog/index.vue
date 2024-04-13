@@ -10,11 +10,12 @@
         show-overflow-tooltip
       >
         <el-table-column
-          v-for="{ label, prop, width } in column"
+          v-for="{ label, prop, width, fixed } in column"
           :key="prop"
           :prop="prop"
           :label="label"
           :width="width || ''"
+          :fixed="fixed || false"
         >
           <template #default="{ row }">
             {{ getColumnData(row, prop) }}
@@ -51,7 +52,7 @@ let tableData: { [key: string]: string | Date }[] = reactive([]);
 // 分页参数
 let pagination = reactive({
   currentPage: 1,
-  pageSize: 20,
+  pageSize: 100,
   total: 1000,
 });
 let handleSizeChange = (value: number) => {

@@ -176,7 +176,7 @@ let checkoutJSON = () => {
           list.push(arr);
         });
 
-        console.log("--- JSON校验通过并生成数据 ---", data);
+        props.modelValue.length = 0;
         props.modelValue.push(
           ...list.splice(0, props.exportDataToplimit || list.length)
         );
@@ -326,17 +326,17 @@ let exportDataObj: {
 });
 
 // 监听导入数据
-watch(
-  showTablePreview,
-  (newVal) => {
-    console.log(
-      "---  监听导入数据 showTablePreview ---",
-      newVal,
-      props.modelValue
-    );
-  },
-  { deep: true }
-);
+// watch(
+//   showTablePreview,
+//   (newVal) => {
+//     console.log(
+//       "---  监听导入数据 showTablePreview ---",
+//       newVal,
+//       props.modelValue
+//     );
+//   },
+//   { deep: true }
+// );
 </script>
 
 <style scoped lang="less"></style>

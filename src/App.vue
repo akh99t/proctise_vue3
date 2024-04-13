@@ -2,8 +2,8 @@
   <div class="app_box" ref="appBoxRef">
     <el-container v-if="!fullscreen">
       <el-header
-        >顶部标题栏
-        <span>浏览器: {{ getBrowserInfo() }}</span>
+        >这是顶部标题栏
+        <span>浏览器: {{ getBrowserInfo() }} | [ 粤ICP备2024229783号 ]</span>
       </el-header>
       <el-container>
         <el-aside>

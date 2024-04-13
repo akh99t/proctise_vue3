@@ -5,6 +5,7 @@
       <titlePanel
         type="title"
         :titleOption="hostTitleOption"
+        :propsDisabled="true"
         v-model="modelValue.title"
       >
       </titlePanel>

@@ -1,16 +1,25 @@
 <template>
   <div class="navigation_bar">
     <div class="navigation_bar_content">
+      <!-- 导航栏 -->
       <navbarLink></navbarLink>
     </div>
     <div class="user_bar">
+      <!-- 头像 -->
       <div class="side_box">
         <el-avatar :icon="UserFilled" size="small" />
       </div>
-      <div class="tag">标签</div>
-      <div class="user_name">
-        {{ user.user }}
+      <!-- 标签 -->
+      <div class="tag" :class="{ tag_admin: user.grade === 0 }">
+        {{ userGradeList[user.grade] }}
       </div>
+      <!-- 用户名 -->
+      <el-tooltip effect="dark" :content="user.user" placement="top">
+        <div class="user_name">
+          {{ user.user }}
+        </div>
+      </el-tooltip>
+      <!-- 退出登录 -->
       <div class="side_box logout">
         <el-button key="info" type="info" link @click="logoutFun">
           <el-icon><CircleCloseFilled /></el-icon>
@@ -22,13 +31,19 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import navbarLink from './navbarLink.vue'
+import navbarLink from "./navbarLink.vue";
 import { UserFilled } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { onMounted, onUnmounted, reactive } from "vue";
 
+const userGradeList: { [key: number]: string } = {
+  0: "管理",
+  1: "用户",
+};
+
 const user = reactive({
   user: "--",
+  grade: 1,
 });
 
 let getUserData = () => {
@@ -99,6 +114,7 @@ onUnmounted(() => {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      cursor: default;
     }
     .tag {
       position: absolute;
@@ -111,6 +127,9 @@ onUnmounted(() => {
       border-radius: 4px;
       left: 24px;
       bottom: 2px;
+    }
+    .tag_admin {
+      background-color: #f56c6c;
     }
   }
 }

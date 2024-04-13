@@ -18,7 +18,7 @@ import configurasion from "./configurasion.vue";
 </script>
 
 <style scoped lang="less">
-@configurasionBoxWidth: 550px;
+@configurasionBoxWidth: 650px;
 .configure_chair_box {
   height: 100%;
   display: flex;

@@ -24,6 +24,7 @@
             size="mini"
             v-for="i in item.data"
             :key="i.label"
+            :disabled="item.disabled"
             @click="buttonClick(i)"
             >{{ i.value }}</el-button
           >

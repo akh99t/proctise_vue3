@@ -12,6 +12,7 @@
               v-for="i in chartTypes"
               :label="i.type"
               :key="i.type"
+              :disabled="i?.disabled"
             >
               {{ i.title }}
             </el-radio-button>

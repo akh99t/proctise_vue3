@@ -2,7 +2,8 @@ export const column = [
   {
     label: '用户名',
     prop: 'userName',
-    width: '120'
+    width: '120',
+    fixed: 'left'
   },
   {
     label: '时间',
@@ -12,7 +13,7 @@ export const column = [
   {
     label: '用户凭证ID',
     prop: 'sessionID',
-    width: '200'
+    width: '290'
   },
   {
     label: 'IP',

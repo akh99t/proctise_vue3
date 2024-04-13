@@ -9,6 +9,8 @@ import loggedIn from "@/views/loggedIn/index.vue";
 import iframeWeb from "@/views/iframeWeb/index.vue";
 import forbidden from "@/views/forbidden/index.vue";
 import InterfaceLog from "@/views/InterfaceLog/index.vue";
+import usersManagement from "@/views/usersManagement/index.vue";
+import crawler from "@/views/crawler/index.vue";
 
 // 检验用户凭证
 import { checkUserCredentials } from "@/plugins/checkUserCredentials";
@@ -34,6 +36,11 @@ const router = createRouter({
       component: batchProcess,
     },
     {
+      name: "爬虫",
+      path: "/crawler",
+      component: crawler,
+    },
+    {
       name: "内嵌第三方",
       path: "/iframe",
       component: iframeWeb,
@@ -42,6 +49,11 @@ const router = createRouter({
       name: "接口日志",
       path: "/InterfaceLog",
       component: InterfaceLog,
+    },
+    {
+      name: "用户管理",
+      path: "/usersManagement",
+      component: usersManagement,
     },
     {
       name: "禁止访问",
@@ -79,7 +91,7 @@ router.beforeEach(async (to, from, next) => {
         HIGHEST_AUTH_ROUTE.includes(to.path) &&
         !ADMIN_ACCOUNT.includes(checkUserCredentialsData?.user)
       ) {
-        next({ query: { toName: to.name || '' }, name: "禁止访问" });
+        next({ name: "禁止访问", query: { toName: to.name || '' } });
       } else {
         next();
       }

@@ -125,10 +125,12 @@ let loginFun = async () => {
       }
     } else if (code === 400) {
       ElMessage.warning("请检查账号或密码是否有误!");
+      btnDisabled.value = false;
     } else {
       ElMessage.error(message);
     }
   } else {
+    btnDisabled.value = false;
     ElMessage.warning("请输入账号密码!");
   }
 };

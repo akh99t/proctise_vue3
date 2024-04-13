@@ -25,7 +25,7 @@ let chatBoxRef = ref();
 </script>
 
 <style scoped lang="less">
-@configureBoxWidth: 500px;
+@configureBoxWidth: 550px;
 .open_ai_interface {
   width: 100%;
   height: 100%;

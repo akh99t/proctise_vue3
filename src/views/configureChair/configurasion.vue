@@ -7,7 +7,7 @@
     </div>
     <footer>
       <el-button size="mini" @click="previewFun()">预览</el-button>
-      <el-button size="mini">导出</el-button>
+      <el-button size="mini" disabled>导出</el-button>
       <el-button type="primary" size="mini" disabled>保存</el-button>
     </footer>
   </div>

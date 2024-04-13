@@ -22,14 +22,21 @@ export const chartTypes: Array<genericityChartTypes> = [
     type: "bar",
     title: "柱状图",
   },
-  // {
-  //     type: 'pie',
-  //     title: '饼图',
-  // },
-  // {
-  //     type: 'top',
-  //     title: 'Top图',
-  // },
+  {
+      type: 'pie',
+      title: '饼图',
+      disabled: true,
+  },
+  {
+      type: 'top',
+      title: 'Top图',
+      disabled: true,
+  },
+  {
+      type: 'bubble',
+      title: '气泡图',
+      disabled: true,
+  },
 ];
 // 相同展示方式的数组
 export const chartTypeClassify: { [key: string]: string[] } = {
@@ -272,6 +279,7 @@ export const dataOption: Array<genericityOptionTy> = [
     label: "随机生成",
     value: false,
     type: "button",
+    disabled: true,
     data: [
       {
         label: "randomData",

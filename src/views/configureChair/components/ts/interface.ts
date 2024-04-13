@@ -34,6 +34,7 @@ export interface genericityOptionTy {
   value: boolean | string | { x: number; y: number } | number;
   type?: string;
   effect?: string;
+  disabled?: boolean;
   data?: Array<{
     label: string;
     value: string;
@@ -55,4 +56,5 @@ export interface genericitySeriesOption {
 export interface genericityChartTypes {
   type: string;
   title: string;
+  disabled?: boolean,
 }

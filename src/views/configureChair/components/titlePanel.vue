@@ -14,7 +14,7 @@
     <div class="operation">
       <el-switch
         v-if="['floating'].includes(item.key) || ['switch'].includes(item.type)"
-        :disabled="!disabled && !['switch'].includes(item.type)"
+        :disabled="(!disabled && !['switch'].includes(item.type)) || (['enabled'].includes(item.key) && propsDisabled)"
         v-model="item.value"
       >
       </el-switch>
@@ -97,6 +97,7 @@ const props = defineProps([
   "titleOption",
   "type",
   "inputMaxLength",
+  "propsDisabled"
 ]);
 const emits = defineEmits(["update:modelValue"]);
 
