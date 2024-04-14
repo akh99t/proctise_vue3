@@ -32,6 +32,7 @@ import { axiosFun } from "@/plugins/axiosFun";
 import { checkUserCredentials } from "@/plugins/checkUserCredentials";
 import { ElMessage } from "element-plus";
 import router from "../../router/index";
+import { MD5 } from "crypto-js";
 
 
 const props = defineProps(["url", "verifyCodeFun", "elementLoadingText"]);
@@ -55,7 +56,7 @@ let qualifyValidation = async () => {
     let userVoucher = await checkUserCredentials();
     if (userVoucher && userVoucher._id) {
       let { code } = await axiosFun(props.url, "post", {
-        invitationCode: invitationCode.value,
+        invitationCode: MD5(invitationCode.value).toString(),
         userID: userVoucher._id,
       });
       if (code === 200) {

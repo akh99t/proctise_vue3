@@ -35,9 +35,9 @@ let getHotData = async () => {
       let { code, data } = await axiosFun(item.url, "post", {
         name: item.name,
       });
-      if (code === 200) {
+      if (code === 200 && Array.isArray(data)) {
         resolve({
-          data,
+          data: data.length > 99 ? data : data.slice(0, 99),
           ...item,
         });
       } else {

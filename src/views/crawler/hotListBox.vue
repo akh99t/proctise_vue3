@@ -1,9 +1,9 @@
 <template>
   <div class="hot_list_box">
     <div class="title_box">
-      <div class="image_box" v-html="imgIcon"></div>
-      {{ label || '--' }}
-      <div class="image_box">--</div>
+      <div class="title_item image_box" v-html="imgIcon"></div>
+      {{ label || "--" }}
+      <div class="title_item subtitle">--</div>
     </div>
     <div class="hr_box"></div>
     <main>
@@ -13,11 +13,14 @@
         :key="`${name}_main_item_key: ${index}`"
         @click="visitExternalPage(item.id)"
       >
-        <div class="index_box">
-          {{ index + 1 }}
-        </div>
         <div class="img_box">
-          <img :src="item.imgUrl" referrerPolicy="no-referrer" />
+          <el-image referrerPolicy="no-referrer" :src="item.imgUrl" fit="cover">
+            <template #error>
+              <div class="image-slot">
+                <el-icon><Picture /></el-icon>
+              </div>
+            </template>
+          </el-image>
         </div>
         <div class="content_box">
           <div class="content_box_item">
@@ -44,8 +47,9 @@
               </el-tag>
             </div>
             <div class="stat_box">
-              <span> 播放: {{ item.view }} </span>
-              <span> 评论: {{ item.reply }} </span>
+              
+              <span> views: <span>{{ item.view }}</span> </span>
+              <span> comments: <span>{{ item.reply }}</span> </span>
             </div>
           </div>
           <div class="content_box_item" v-else-if="name === 'zhihuHot'">
@@ -53,6 +57,9 @@
               {{ item.subtitle }}
             </span>
           </div>
+        </div>
+        <div class="index_box">
+          {{ index + 1 }}
         </div>
       </div>
       <div class="main_item_bottom_border" v-if="formattedData.length">
@@ -107,7 +114,6 @@ let visitExternalPage = (id: string) => {
     window.open(`${props.openUrl}${id}` || "" + id, "_blank");
   }
 };
-
 </script>
 
 <style src="./less/hotListBox.less" lang="less"></style>

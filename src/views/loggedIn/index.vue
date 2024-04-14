@@ -119,7 +119,9 @@ let loginFun = async () => {
       ) {
         saveUserDataToLocalStorage(userCredentials.data);
         ElMessage.success(`${message}!`);
-        router.push({ path: "/" });
+        setTimeout(() => {
+          router.push({ path: "/" });
+        }, 700);
       } else {
         ElMessage.warning("登录操作有误, 请刷新重试!");
       }
@@ -141,9 +143,7 @@ let guestLogin = () => {
   user.value = "访客登录";
   password.value = "999999";
   nextTick(() => {
-    setTimeout(() => {
-      loginFun();
-    }, 1000);
+    loginFun();
   });
 };
 
@@ -177,9 +177,12 @@ watch(
   () => appBoxWidth,
   (newVal: any) => {
     let iconNum = Math.ceil(newVal.value / 70) + 1;
+    nextTick(() => {
+      marioTranslationBoxRef.value.style.animationDuration = `${iconNum / 2}s`
+    })
     iconFloorNum.value = iconNum;
   },
-  { deep: true }
+  { deep: true, immediate: true, }
 );
 </script>
 

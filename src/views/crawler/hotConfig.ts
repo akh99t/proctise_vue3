@@ -2,30 +2,6 @@ import { ZHIHU_ICON, BLBL_ICON } from "@/assets/icon";
 
 export const HOT_LIST = [
   {
-    label: "zhihu热榜",
-    name: "zhihuHot",
-    url: "/crawler/hot",
-    imgIcon: ZHIHU_ICON,
-    openUrl: "https://www.zhihu.com/question/",
-    formatDataFun: (data: []) => {
-      return data.map((item: { [key: string]: any }) => {
-        let { target, detail_text, children } = item || {};
-        let imgUrl = "";
-        if (children && children.length) {
-          imgUrl = children[0]?.thumbnail || "";
-        }
-        let { title, id, excerpt } = target || {};
-        return {
-          title,
-          subtitle: excerpt,
-          id,
-          imgUrl,
-          name: detail_text,
-        };
-      });
-    },
-  },
-  {
     label: "BLBL综合热门",
     name: "BLBLHot",
     url: "/crawler/hot",
@@ -46,6 +22,30 @@ export const HOT_LIST = [
           reply: stat?.reply || 0,
           tags,
           id: bvid,
+        };
+      });
+    },
+  },
+  {
+    label: "zhihu热榜",
+    name: "zhihuHot",
+    url: "/crawler/hot",
+    imgIcon: ZHIHU_ICON,
+    openUrl: "https://www.zhihu.com/question/",
+    formatDataFun: (data: []) => {
+      return data.map((item: { [key: string]: any }) => {
+        let { target, detail_text, children } = item || {};
+        let imgUrl = "";
+        if (children && children.length) {
+          imgUrl = children[0]?.thumbnail || "";
+        }
+        let { title, id, excerpt } = target || {};
+        return {
+          title,
+          subtitle: excerpt,
+          id,
+          imgUrl,
+          name: detail_text,
         };
       });
     },
