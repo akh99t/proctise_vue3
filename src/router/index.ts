@@ -7,6 +7,7 @@ import configureChair from "@/views/configureChair/index.vue";
 import openAi from "@/views/openAi/index.vue";
 import loggedIn from "@/views/loggedIn/index.vue";
 import iframeWeb from "@/views/iframeWeb/index.vue";
+import mindMap from "@/views/mindMap/index.vue";
 import forbidden from "@/views/forbidden/index.vue";
 import InterfaceLog from "@/views/InterfaceLog/index.vue";
 import usersManagement from "@/views/usersManagement/index.vue";
@@ -31,11 +32,6 @@ const router = createRouter({
       component: configureChair,
     },
     {
-      name: "批量处理文件",
-      path: "/batchProcess",
-      component: batchProcess,
-    },
-    {
       name: "爬虫",
       path: "/crawler",
       component: crawler,
@@ -44,6 +40,16 @@ const router = createRouter({
       name: "内嵌第三方",
       path: "/iframe",
       component: iframeWeb,
+    },
+    {
+      name: "思维导图",
+      path: "/mindMap",
+      component: mindMap,
+    },
+    {
+      name: "批量处理文件",
+      path: "/batchProcess",
+      component: batchProcess,
     },
     {
       name: "接口日志",

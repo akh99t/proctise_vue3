@@ -28,7 +28,7 @@ import batchProcessMain from "./batchProcessMain.vue";
     justify-content: flex-end;
     align-items: center;
     padding: 0 10px;
-    background-color: pink;
+    background-color: #ccc;
   }
 }
 </style>

@@ -2,13 +2,11 @@
   <div class="app_box" ref="appBoxRef">
     <el-container v-if="!fullscreen">
       <el-header>
-        <span class="ip">{{
-          _IP && _IP_LOCATION ? `${_IP} | ${_IP_LOCATION}` : ""
-        }}</span>
+        <span class="ip"></span>
         这是顶部标题栏
-        <span class="browser"
-          >浏览器: {{ getBrowserInfo() }} | [ {{ ICP }} ]</span
-        >
+        <span class="browser">
+          <projectInfo />
+        </span>
       </el-header>
       <el-container>
         <el-aside>
@@ -24,18 +22,15 @@
 </template>
 
 <script setup lang="ts">
+import projectInfo from "@/components/projectInfo/index.vue";
 import NavigationBar from "./views/NavigationBar/index.vue";
-import { ref, watch, watchEffect, provide, nextTick } from "vue";
+import { ref, watch, watchEffect, provide } from "vue";
 import { RouterView, useRoute } from "vue-router";
-import { getBrowserInfo } from "./plugins/browserInfo";
-import { getIPFun, ICP } from "./constants";
 
 const route = useRoute();
 let appBoxRef = ref<HTMLElement | null>();
 let appBoxWidth = ref(0);
 let fullscreen = ref(true); // 判断是否组件全屏
-let _IP = ref("");
-let _IP_LOCATION = ref("");
 
 watchEffect(() => {
   if (appBoxRef.value) {
@@ -65,16 +60,5 @@ watch(
     deep: true,
   }
 );
-
-// IP与IP归属地
-nextTick(() => {
-  getIPFun.then((data: any) => {
-    let { IP, IP_LOCATION } = data;
-    if (IP && IP_LOCATION) {
-      _IP_LOCATION.value = IP_LOCATION;
-      _IP.value = IP;
-    }
-  });
-});
 </script>
 <style src="./assets/APP.less" lang="less"></style>

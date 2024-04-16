@@ -2,7 +2,7 @@
   <div class="crawler_hot_box">
     <div
       class="hot_item"
-      v-for="{ label, imgIcon, data, name, openUrl, formatDataFun } in hotList"
+      v-for="{ label, imgIcon, data, updateTime, name, openUrl, formatDataFun } in hotList"
       :key="`hot_item_key: ${label}`"
     >
       <hotListBox
@@ -11,6 +11,7 @@
         :data="data"
         :name="name"
         :openUrl="openUrl"
+        :updateTime="updateTime"
         :formatDataFun="formatDataFun"
       ></hotListBox>
     </div>
@@ -22,9 +23,10 @@
 
 <script setup lang="ts">
 import hotListBox from "./hotListBox.vue";
-import { HOT_LIST } from "./hotConfig.ts";
+import { HOT_LIST } from "./hotConfig";
 import { axiosFun } from "@/plugins/axiosFun";
 import { reactive } from "vue";
+import moment from 'moment';
 
 const hotList: { [key: string]: string | object }[] = reactive([]);
 
@@ -32,12 +34,13 @@ const hotList: { [key: string]: string | object }[] = reactive([]);
 let getHotData = async () => {
   let promiseList = HOT_LIST.map((item) => {
     return new Promise(async (resolve, reject) => {
-      let { code, data } = await axiosFun(item.url, "post", {
+      let { code, data, updateTime } = await axiosFun(item.url, "post", {
         name: item.name,
       });
       if (code === 200 && Array.isArray(data)) {
         resolve({
           data: data.length > 99 ? data : data.slice(0, 99),
+          updateTime: moment(updateTime).format("HH:mm"),
           ...item,
         });
       } else {

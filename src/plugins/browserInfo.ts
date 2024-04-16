@@ -1,5 +1,5 @@
 // 获取浏览器信息
-export function getBrowserInfo() {
+function getBrowserInfo() {
   const userAgent = navigator.userAgent || '';
   let browserName = '';
   let browserVersion = '';
@@ -23,3 +23,5 @@ export function getBrowserInfo() {
 
   return `${browserName}_${browserVersion}`;
 }
+
+export const browserInfo = getBrowserInfo()

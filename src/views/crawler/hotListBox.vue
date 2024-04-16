@@ -3,7 +3,7 @@
     <div class="title_box">
       <div class="title_item image_box" v-html="imgIcon"></div>
       {{ label || "--" }}
-      <div class="title_item subtitle">--</div>
+      <div class="title_item update_time">{{ updateTime ? `update: ${updateTime}` : '--'}}</div>
     </div>
     <div class="hr_box"></div>
     <main>
@@ -78,6 +78,7 @@ const props = defineProps([
   "label",
   "imgIcon",
   "data",
+  "updateTime",
   "name",
   "openUrl",
   "formatDataFun",

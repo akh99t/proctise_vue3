@@ -1,5 +1,9 @@
 <template>
   <div class="login_interface">
+    <!-- 信息展示 -->
+    <div class="info_box">
+      <projectInfo />
+    </div>
     <!-- 登录窗口 -->
     <div class="center_box">
       <div class="item">
@@ -75,6 +79,7 @@
 </template>
 
 <script setup lang="ts">
+import projectInfo from "@/components/projectInfo/index.vue"
 import { MD5 } from "crypto-js";
 import { axiosFun, saveUserDataToLocalStorage } from "@/plugins/axiosFun";
 import { ref, nextTick, inject, watch } from "vue";

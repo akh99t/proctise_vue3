@@ -4,8 +4,10 @@ import axios from "axios";
 const { protocol, hostname, port } = window.location || {};
 console.log("当前域名协议端口号", protocol, hostname, port);
 
+// 当前web网址
+export const WEB_URL = `${protocol}//${hostname}`;
 // nodejs服务器端口号
-const NODEJS_PORT = 3000;
+const NODEJS_PORT = '3000';
 // 服务器网址
 export const BASE_URL = `${protocol}//${hostname}:${NODEJS_PORT}`;
 // 网络备案号
