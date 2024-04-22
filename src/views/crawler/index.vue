@@ -1,15 +1,27 @@
 <template>
-  <div class="crawler_hot_box">
+  <div class="crawler_hot_box" v-loading="loading">
     <div
       class="hot_item"
-      v-for="{ label, imgIcon, data, updateTime, name, openUrl, formatDataFun } in hotList"
+      v-for="{
+        label,
+        imgIcon,
+        imgUrl,
+        data,
+        updateTime,
+        name,
+        openUrl,
+        formatDataFun,
+        type,
+      } in hotList"
       :key="`hot_item_key: ${label}`"
     >
       <hotListBox
         :label="label"
         :imgIcon="imgIcon"
+        :imgUrl="imgUrl"
         :data="data"
         :name="name"
+        :type="type"
         :openUrl="openUrl"
         :updateTime="updateTime"
         :formatDataFun="formatDataFun"
@@ -25,24 +37,34 @@
 import hotListBox from "./hotListBox.vue";
 import { HOT_LIST } from "./hotConfig";
 import { axiosFun } from "@/plugins/axiosFun";
-import { reactive } from "vue";
-import moment from 'moment';
+import { reactive, ref, nextTick } from "vue";
+import moment from "moment";
 
+let loading = ref(false);
 const hotList: { [key: string]: string | object }[] = reactive([]);
 
 // 获取热点信息
 let getHotData = async () => {
+  loading.value = true;
   let promiseList = HOT_LIST.map((item) => {
     return new Promise(async (resolve, reject) => {
       let { code, data, updateTime } = await axiosFun(item.url, "post", {
         name: item.name,
       });
-      if (code === 200 && Array.isArray(data)) {
-        resolve({
-          data: data.length > 99 ? data : data.slice(0, 99),
-          updateTime: moment(updateTime).format("HH:mm"),
-          ...item,
-        });
+      if (code === 200 ) {
+        if (item.type === 'option' && typeof data === 'object' && !Array.isArray(data)) {
+          resolve({
+            data,
+            updateTime: moment(updateTime).format("HH:mm"),
+            ...item,
+          });
+        } else if ( Array.isArray(data)) {
+          resolve({
+            data: data.length > 99 ? data : data.slice(0, 99),
+            updateTime: moment(updateTime).format("HH:mm"),
+            ...item,
+          });
+        }
       } else {
         reject();
       }
@@ -52,6 +74,9 @@ let getHotData = async () => {
   PromiseAllFun.then((list: any) => {
     hotList.length = 0;
     hotList.push(...list);
+    nextTick(() => {
+      loading.value = false;
+    });
   }).catch(() => {});
 };
 

@@ -50,11 +50,12 @@ watch(
   (newValue) => {
     let value = newValue.value;
     if (value) {
-      itemLength.value = Math.ceil((value - 200) / 70) + 3;
+      itemLength.value = Math.ceil((value - 200) / 70) + 2;
     }
   },
   {
     deep: true,
+    immediate: true,
   }
 );
 

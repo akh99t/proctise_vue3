@@ -8,6 +8,7 @@
         height="100%"
         :border="true"
         show-overflow-tooltip
+        v-loading="loading"
       >
         <el-table-column
           v-for="{ label, prop, width, fixed } in column"
@@ -75,6 +76,8 @@ let pagination: { [key: string]: number } = reactive({
   pageSize: 100,
   total: 1000,
 });
+let loading = ref(false);
+
 let handleSizeChange = (value: number) => {
   pagination.pageSize = value;
   geUsersList();
@@ -86,6 +89,7 @@ let handleCurrentChange = (value: number) => {
 
 // 获取用户列表
 let geUsersList = async () => {
+  loading.value = true;
   const { data, code } = await axiosFun("/users/usersList", "post", {
     ...pagination,
   });
@@ -100,6 +104,10 @@ let geUsersList = async () => {
   } else {
     ElMessage.warning("无法获取用户列表数据, 请稍后再试!");
   }
+
+  nextTick(() => {
+    loading.value = false;
+  })
 };
 
 // 解析表格数据

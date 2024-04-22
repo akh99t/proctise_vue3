@@ -1,7 +1,7 @@
 <template>
   <div class="log_box">
     <div class="title_box">接口日志</div>
-    <div class="table_box">
+    <div class="table_box" v-loading="loading">
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { column } from "./tableColumn";
 import { axiosFun } from "@/plugins/axiosFun";
-import { ref, reactive, toRaw, nextTick } from 'vue';
+import { ref, reactive, toRaw, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import moment from "moment";
 
@@ -55,6 +55,8 @@ let pagination = reactive({
   pageSize: 100,
   total: 1000,
 });
+let loading = ref(false);
+
 let handleSizeChange = (value: number) => {
   pagination.pageSize = value;
   getLogList();
@@ -66,6 +68,7 @@ let handleCurrentChange = (value: number) => {
 
 // 获取日志数据
 let getLogList = async () => {
+  loading.value = true;
   const { data, code } = await axiosFun("/users/log", "post", {
     ...pagination,
   });
@@ -80,6 +83,10 @@ let getLogList = async () => {
   } else {
     ElMessage.warning("无法获取接口日志数据, 请稍后再试!");
   }
+
+  nextTick(() => {
+    loading.value = false;
+  });
 };
 
 // 解析表格数据

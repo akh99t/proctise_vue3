@@ -18,7 +18,7 @@ export const column = [
   {
     label: 'IP',
     prop: 'IP',
-    width: '140'
+    width: '160'
   },
   {
     label: '路由',

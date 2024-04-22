@@ -12,6 +12,7 @@ import forbidden from "@/views/forbidden/index.vue";
 import InterfaceLog from "@/views/InterfaceLog/index.vue";
 import usersManagement from "@/views/usersManagement/index.vue";
 import crawler from "@/views/crawler/index.vue";
+import dataLargeScreen from '@/views/dataLargeScreen/index.vue'
 
 // 检验用户凭证
 import { checkUserCredentials } from "@/plugins/checkUserCredentials";
@@ -37,19 +38,24 @@ const router = createRouter({
       component: crawler,
     },
     {
+      name: "笔记",
+      path: "/mindMap",
+      component: mindMap,
+    },
+    {
       name: "内嵌第三方",
       path: "/iframe",
       component: iframeWeb,
     },
     {
-      name: "思维导图",
-      path: "/mindMap",
-      component: mindMap,
-    },
-    {
       name: "批量处理文件",
       path: "/batchProcess",
       component: batchProcess,
+    },
+    {
+      name: "数据整合大屏",
+      path: "/dataLargeScreen",
+      component: dataLargeScreen,
     },
     {
       name: "接口日志",
